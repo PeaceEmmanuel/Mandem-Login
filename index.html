@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amani Social Club - Members Only</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Spray+Paint&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a1a0a, #1a1a0a);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .smoke-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 25% 25%, rgba(255, 0, 127, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(0, 247, 255, 0.1) 0%, transparent 50%);
+            animation: smokeFloat 12s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes smokeFloat {
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+        
+        .graffiti-tag {
+            position: absolute;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Rubik Spray Paint', cursive;
+            font-size: 4rem;
+            color: #ff007f;
+            text-shadow: 3px 3px #000, 0 0 20px #ff00ff, 0 0 40px #ff007f;
+            z-index: 2;
+            animation: neonFlicker 2s ease-in-out infinite alternate;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .graffiti-tag:hover {
+            transform: translateX(-50%) scale(1.1);
+            filter: hue-rotate(90deg);
+        }
+        
+        @keyframes neonFlicker {
+            0%,
+            100% {
+                text-shadow: 3px 3px #000, 0 0 20px #ff00ff, 0 0 40px #ff007f;
+            }
+            50% {
+                text-shadow: 3px 3px #000, 0 0 40px #ff00ff, 0 0 80px #ff007f;
+            }
+        }
+        
+        .login-container {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(26, 10, 26, 0.9));
+            padding: 3rem 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 0 50px rgba(255, 0, 127, 0.3), inset 0 0 30px rgba(0, 247, 255, 0.1);
+            width: 90%;
+            max-width: 450px;
+            z-index: 3;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            animation: containerPulse 4s ease-in-out infinite;
+            transform: perspective(1000px) rotateX(5deg);
+        }
+        
+        @keyframes containerPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 50px rgba(255, 0, 127, 0.3), inset 0 0 30px rgba(0, 247, 255, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 80px rgba(255, 0, 127, 0.5), inset 0 0 50px rgba(0, 247, 255, 0.2);
+            }
+        }
+        
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: #00f7ff;
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 0 10px #00f7ff;
+            }
+            100% {
+                text-shadow: 0 0 20px #00f7ff, 0 0 40px #00f7ff;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: #ccc;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #333;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #111, #222);
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .form-group input:focus {
+            border-color: #00f7ff;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+            transform: scale(1.02);
+        }
+        
+        .form-group input::placeholder {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #ff007f, #ff00ff);
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+            font-family: 'Orbitron', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 0, 127, 0.8);
+            background: linear-gradient(135deg, #ff00ff, #ff007f);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+        .digital-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .rain-drop {
+            position: absolute;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        
+        .warning-text {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            color: #ff0000;
+            text-align: center;
+            animation: warningBlink 2s ease-in-out infinite;
+            text-shadow: 0 0 10px #ff0000;
+            font-weight: bold;
+        }
+        
+        @keyframes warningBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+        
+        .street-art {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(transparent, rgba(255, 0, 127, 0.05));
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .member-count {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #00ff00;
+            font-weight: bold;
+            border: 1px solid #00ff00;
+            animation: countUpdate 3s ease-in-out infinite;
+        }
+        
+        @keyframes countUpdate {
+            0%,
+            100% {
+                color: #00ff00;
+            }
+            50% {
+                color: #ffff00;
+            }
+        }
+        
+        .access-denied {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: none;
+            z-index: 10;
+            animation: accessDeniedShake 0.5s ease-in-out;
+        }
+        
+        @keyframes accessDeniedShake {
+            0%,
+            100% {
+                transform: translate(-50%, -50%);
+            }
+            25% {
+                transform: translate(-48%, -50%);
+            }
+            75% {
+                transform: translate(-52%, -50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="smoke-effect"></div>
+    <div class="digital-rain" id="digitalRain"></div>
+
+    <div class="member-count" id="memberCount">
+        ACTIVE MEMBERS: <span id="activeCount">1337</span>
+    </div>
+
+    <div class="graffiti-tag" onclick="triggerSpecialEffect()">
+        HOMMIES
+    </div>
+
+    <div class="login-container">
+        <h2>MEMBERS ONLY</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">STREET NAME</label>
+                <input type="text" id="username" placeholder="Your underground alias..." required>
+            </div>
+            <div class="form-group">
+                <label for="password">SECRET CODE</label>
+                <input type="password" id="password" placeholder="The password that opens doors..." required>
+            </div>
+            <button class="login-btn" type="submit">ENTER THE UNDERWORLD</button>
+        </form>
+    </div>
+
+    <div class="access-denied" id="accessDenied">
+        ACCESS DENIED - WRONG CREDENTIALS
+    </div>
+
+    <div class="warning-text">
+        ⚠️ UNAUTHORIZED ACCESS WILL BE TRACED ⚠️
+    </div>
+
+    <div class="street-art"></div>
+
+    <script>
+        // Digital rain effect
+        function createDigitalRain() {
+            try {
+                const rain = document.getElementById('digitalRain');
+                if (!rain) return;
+
+                const characters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+                for (let i = 0; i < 30; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.textContent = characters[Math.floor(Math.random() * characters.length)];
+                    drop.style.left = Math.random() * 100 + '%';
+                    drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    drop.style.animationDelay = Math.random() * 2 + 's';
+                    rain.appendChild(drop);
+                }
+            } catch (e) {
+                console.log('Digital rain effect disabled');
+            }
+        }
+
+        // Member count animation
+        function animateMemberCount() {
+            const countElement = document.getElementById('activeCount');
+            const baseCount = 1337;
+            setInterval(() => {
+                const variance = Math.floor(Math.random() * 20) - 10;
+                countElement.textContent = baseCount + variance;
+            }, 3000);
+        }
+
+        // Special effect on title click
+        function triggerSpecialEffect() {
+            const title = document.querySelector('.graffiti-tag');
+            title.style.animation = 'none';
+            title.style.transform = 'translateX(-50%) scale(1.5) rotate(360deg)';
+            title.style.filter = 'hue-rotate(180deg)';
+
+            setTimeout(() => {
+                title.style.animation = 'neonFlicker 2s ease-in-out infinite alternate';
+                title.style.transform = 'translateX(-50%)';
+                title.style.filter = 'none';
+            }, 1000);
+        }
+
+        // Login form handling
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simulate authentication
+            if (username.toLowerCase() === 'admin' && password === '1337') {
+                // Success animation
+                document.body.style.animation = 'gradientShift 0.5s ease infinite';
+                setTimeout(() => {
+                    alert('🎉 WELCOME TO THE CLUB, BOSS! 🎉');
+                }, 500);
+            } else {
+                // Show access denied
+                const denied = document.getElementById('accessDenied');
+                denied.style.display = 'block';
+                setTimeout(() => {
+                    denied.style.display = 'none';
+                }, 2000);
+
+                // Shake the container
+                const container = document.querySelector('.login-container');
+                container.style.animation = 'accessDeniedShake 0.5s ease-in-out';
+                setTimeout(() => {
+                    container.style.animation = 'containerPulse 4s ease-in-out infinite';
+                }, 500);
+            }
+        });
+
+        // Input field enhancements
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.background = 'linear-gradient(135deg, #001a1a, #1a001a)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.style.background = 'linear-gradient(135deg, #111, #222)';
+            });
+        });
+
+        // Initialize effects on page load
+        window.addEventListener('load', function() {
+            createDigitalRain();
+            animateMemberCount();
+        });
+
+        // Also initialize if already loaded
+        if (document.readyState === 'complete') {
+            createDigitalRain();
+            animateMemberCount();
+        }
+
+        // Background music simulation (visual only)
+        console.log('🎵 Background beats loading... 🎵');
+        console.log('🔊 Bass drops incoming... 🔊');
+    </script>
+</body>
+
+</html>
